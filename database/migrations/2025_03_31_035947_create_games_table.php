@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('room_id')->constrained()->cascadeOnDelete();
             $table->date('started_at');
-            $table->date('finished_at');
+            $table->date('finished_at')->nullable();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->enum('status', ['active', 'completed', 'cancelled'])->default('active');
 

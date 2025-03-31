@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Game;
 use App\Models\GameScore;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +20,14 @@ class GameScoreFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'game_id' => static function () {
+                return Game::factory()->create()->id;
+            },
+            'user_id' => static function () {
+                return User::factory()->create()->id;
+            },
+            'score' => fake()->numberBetween(0, 1000),
+            'rank' => fake()->numberBetween(1, 10),
         ];
     }
 }

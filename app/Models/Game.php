@@ -29,7 +29,7 @@ class Game extends Model
 
     public function questions(): BelongsToMany
     {
-        return $this->belongsToMany(Question::class, 'game_question')
+        return $this->belongsToMany(Question::class, 'game_questions')
             ->withPivot(['order']);
     }
 
