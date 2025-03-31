@@ -7,6 +7,7 @@ use App\Models\Room;
 use App\Models\User;
 use App\Repositories\RoomRepositoryInterface;
 use Exception;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Event;
 
 readonly class RoomService
@@ -22,7 +23,7 @@ readonly class RoomService
             'host_id' => $host->id,
             'is_public' => $data['is_public'] ?? true,
             'password' => $data['password'] ?? null,
-            'max_players' => $data['max_players'],
+            'players_count' => $data['players_count'],
             'status' => 'waiting',
             'category_id' => $data['category_id'],
             'answer_time' => $data['answer_time'],
@@ -37,7 +38,7 @@ readonly class RoomService
 
     public function joinRoom(Room $room, User $user, string $password = null): void
     {
-        if ($room->players()->count() >= $room->max_players) {
+        if ($room->players()->count() >= $room->players_count) {
             throw new Exception('Комната заполнена');
         }
 
@@ -63,7 +64,7 @@ readonly class RoomService
         $this->roomRepository->update($room);
     }
 
-    public function all(bool $publicOnly = true)
+    public function all(bool $publicOnly = true): Collection
     {
         $rooms = $this->roomRepository->all();
 

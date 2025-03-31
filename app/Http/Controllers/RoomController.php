@@ -19,13 +19,13 @@ class RoomController extends Controller
     {
         $rooms = $this->roomService->all();
 
-        return Inertia::render('Rooms/Index', ['rooms' => $rooms->toArray()]);
+        return Inertia::render('Rooms/Index', ['rooms' => $rooms]);
     }
 
     public function store(Request $request): JsonResponse
     {
         $room = $this->roomService->createRoom(
-            $request->only(['name', 'is_public', 'password', 'max_players', 'is_ai', 'category_id', 'question_count', 'answer_time']),
+            $request->only(['name', 'is_public', 'password', 'players_count', 'is_ai', 'category_id', 'questions_count', 'answer_time']),
             auth()->user()
         );
 

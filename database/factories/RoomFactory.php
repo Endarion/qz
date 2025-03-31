@@ -24,19 +24,19 @@ class RoomFactory extends Factory
             'host_id' => User::factory(),
             'is_public' => fake()->boolean(),
             'password' => static fn(array $attributes) => $attributes['is_public'] ? null : 'secret',
-            'max_players' => fake()->numberBetween(2, 4),
+            'players_count' => fake()->numberBetween(2, 4),
             'status' => fake()->randomElement(['waiting', 'playing', 'finished']),
-            'question_count' => fake()->numberBetween(5, 30),
+            'questions_count' => fake()->numberBetween(5, 30),
         ];
     }
 
     public function withTwoPlayers(): Factory|RoomFactory
     {
-        return $this->state(['max_players' => 2]);
+        return $this->state(['players_count' => 2]);
     }
 
     public function withFourPlayers(): Factory|RoomFactory
     {
-        return $this->state(['max_players' => 4]);
+        return $this->state(['players_count' => 4]);
     }
 }

@@ -27,7 +27,10 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/rooms', [RoomController::class, 'index'])->name('rooms.index');
+    Route::post('/rooms', [RoomController::class, 'store'])->name('rooms.store');
     Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
+    Route::post('/rooms/{room}/join', [RoomController::class, 'join'])->name('rooms.join');
+    Route::get('/rooms/{room}/start', [RoomController::class, 'start'])->name('rooms.start');
 });
 
 require __DIR__ . '/auth.php';

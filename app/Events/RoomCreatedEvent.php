@@ -26,8 +26,8 @@ class RoomCreatedEvent
                 'id' => $this->room->id,
                 'name' => $this->room->name,
                 'status' => $this->room->status,
-                'question_count' => $this->room->question_count,
-                'max_players' => $this->room->max_players,
+                'questions_count' => $this->room->questions_count,
+                'players_count' => $this->room->players_count,
                 'is_ai' => $this->room->is_ai,
             ],
         ];

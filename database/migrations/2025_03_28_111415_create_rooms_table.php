@@ -16,11 +16,11 @@ return new class extends Migration {
             $table->string('code', 5)->unique();
             $table->foreignId('host_id')->constrained('users')->cascadeOnDelete();
 
-            $table->unsignedTinyInteger('question_count')->default(10)
+            $table->unsignedTinyInteger('questions_count')->default(10)
                 ->comment('Количество вопросов (5-30)');
             $table->unsignedTinyInteger('answer_time')->default(15);
 
-            $table->unsignedTinyInteger('max_players')->default(2)
+            $table->unsignedTinyInteger('players_count')->default(2)
                 ->comment('Количество игроков (2-4)');
 
             $table->boolean('is_public')->default(false);

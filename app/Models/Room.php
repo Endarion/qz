@@ -20,19 +20,19 @@ class Room extends Model
         'code',
         'host_id',
         'category_id',
-        'question_count',
+        'questions_count',
         'answer_time',
         'is_public',
         'password',
         'is_ai',
         'status',
-        'max_players',
+        'players_count',
     ];
 
     protected $casts = [
         'is_public' => 'boolean',
         'is_ai' => 'boolean',
-        'max_players' => 'integer',
+        'players_count' => 'integer',
     ];
 
     public static function boot(): void
@@ -40,11 +40,11 @@ class Room extends Model
         parent::boot();
 
         static::saving(static function (Room $room) {
-            if ($room->max_players < 2 || $room->max_players > 4) {
+            if ($room->players_count < 2 || $room->players_count > 4) {
                 throw new InvalidArgumentException('Количество игроков должно быть от 2 до 4');
             }
 
-            if ($room->question_count < 5 || $room->question_count > 30) {
+            if ($room->questions_count < 5 || $room->questions_count > 30) {
                 throw new InvalidArgumentException('Количество вопросов должно быть от 5 до 30');
             }
         });
