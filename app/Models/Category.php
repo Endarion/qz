@@ -23,7 +23,7 @@ class Category extends Model
         return $this->hasMany(Question::class);
     }
 
-    public function games()
+    public function games(): HasMany
     {
         return $this->hasMany(Game::class);
     }

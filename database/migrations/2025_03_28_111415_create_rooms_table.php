@@ -14,12 +14,14 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('code', 5)->unique();
-            $table->foreignId('host_id')->constrained();
+            $table->foreignId('host_id')->constrained('users')->cascadeOnDelete();
 
-            $table->unsignedTinyInteger('question_count')->default(10);
+            $table->unsignedTinyInteger('question_count')->default(10)
+                ->comment('Количество вопросов (5-30)');
             $table->unsignedTinyInteger('answer_time')->default(15);
 
-            // todo max_players?
+            $table->unsignedTinyInteger('max_players')->default(2)
+                ->comment('Количество игроков (2-4)');
 
             $table->boolean('is_public')->default(false);
             $table->string('password')->nullable();
