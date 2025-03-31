@@ -3,63 +3,53 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Services\RoomService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class RoomController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(private readonly RoomService $roomService)
     {
-        //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function index(): Response
     {
-        //
+        $rooms = $this->roomService->all();
+
+        return Inertia::render('Rooms/Index', ['rooms' => $rooms->toArray()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
-        //
+        $room = $this->roomService->createRoom(
+            $request->only(['name', 'is_public', 'password', 'max_players', 'is_ai', 'category_id', 'question_count', 'answer_time']),
+            auth()->user()
+        );
+
+        return response()->json([$room->id]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Room $room)
+    public function show(Room $room): Response
     {
-        //
+        $room->load('players', 'host');
+        return Inertia::render('Rooms/Show', ['room' => $room->toArray()]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Room $room)
+    public function join(Request $request, Room $room): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Room $room)
-    {
-        //
+        $this->roomService->joinRoom($room, auth()->user(), $request->input('password'));
+        return response()->json(['success' => true]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Room $room)
+    public function start(Room $room): JsonResponse
     {
-        //
+        $this->roomService->startGame($room, auth()->user());
+        return response()->json(['success' => true]);
     }
 }

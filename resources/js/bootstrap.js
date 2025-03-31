@@ -7,11 +7,11 @@ window.Pusher = Pusher;
 
 window.Echo = new Echo({
     broadcaster: 'reverb',
-    key: process.env.MIX_REVERB_APP_KEY,
-    wsHost: process.env.MIX_REVERB_HOST,
-    wsPort: process.enc.MIX_REVERB_PORT,
-    wssPort: process.env.MIX_REVERB_PORT,
-    forceTLS: (process.env.MIX_REVERB_SCHEME === 'https'),
+    key: import.meta.env.VITE_REVERB_APP_KEY,
+    wsHost: import.meta.env.VITE_REVERB_HOST,
+    wsPort: import.meta.env.VITE_REVERB_PORT,
+    wssPort: import.meta.env.VITE_REVERB_PORT,
+    forceTLS: (import.meta.env.VITE_REVERB_SCHEME === 'https'),
     enabledTransports: ['ws', 'wss']
 });
 
