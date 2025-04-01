@@ -36,7 +36,7 @@ readonly class RoomService
         return $room;
     }
 
-    public function joinRoom(Room $room, User $user, string $password = null): void
+    public function joinRoom(Room $room, User $user, ?string $password = null): void
     {
         if ($room->players()->count() >= $room->players_count) {
             throw new Exception('Комната заполнена');

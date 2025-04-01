@@ -1,0 +1,79 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: _docker/Dockerfile
+        image: laravel-app
+        container_name: qz-app
+        restart: unless-stopped
+        tty: true
+        environment:
+            SERVICE_NAME: app
+            SERVICE_TAGS: dev
+            XDEBUG_SESSIONS: docker-server
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        networks:
+            - app-network
+    nginx:
+        image: nginx:alpine
+        container_name: qz-nginx
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "8080:80"
+        volumes:
+            - ./:/var/www
+            - ./_docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+        networks:
+            - app-network
+    db:
+        image: postgres:17.4-alpine
+        container_name: qz-postgres
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "5432:5432"
+        environment:
+            PGPASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_DATABASE}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_USER: ${DB_USERNAME}
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+        networks:
+            - app-network
+    memcached:
+        image:
+            memcached:1.6
+        container_name: qz-memcached
+        ports:
+            - "11211:11211"
+        networks:
+            - app-network
+    mailpit:
+        image: axllent/mailpit
+        container_name: qz-mailpit
+        ports:
+            - "1025:1025"  # SMTP порт
+            - "8025:8025"  # Web интерфейс
+        networks:
+            - app-network
+    rabbitmq:
+        image: rabbitmq:4.0-management
+        ports:
+            - "5672:5672"  # Порт для AMQP
+            - "15672:15672"  # Порт для управления RabbitMQ (Web UI)
+        environment:
+            RABBITMQ_DEFAULT_USER: rabbitus
+            RABBITMQ_DEFAULT_PASS: rabbitpass
+        networks:
+            - app-network
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    pgdata:
+        driver: local

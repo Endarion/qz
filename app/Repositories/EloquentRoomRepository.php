@@ -26,6 +26,6 @@ class EloquentRoomRepository implements RoomRepositoryInterface
 
     public function all(): Collection
     {
-        return Room::with('players')->get();
+        return Room::with('players', 'category')->get();
     }
 }

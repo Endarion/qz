@@ -17,4 +17,11 @@ export default defineConfig({
             },
         }),
     ],
+    optimizeDeps: {
+        include: [
+            '@fortawesome/fontawesome-svg-core',
+            '@fortawesome/free-solid-svg-icons',
+            '@fortawesome/vue-fontawesome'
+        ]
+    }
 });

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Category;
 use App\Models\Room;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -20,8 +21,11 @@ class RoomFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'code' => fake()->unique()->randomNumber(),
+            'code' => fake()->unique()->randomNumber(5),
             'host_id' => User::factory(),
+            'category_id' => function () {
+                return Category::inRandomOrder()->first()->id;
+            },
             'is_public' => fake()->boolean(),
             'password' => static fn(array $attributes) => $attributes['is_public'] ? null : 'secret',
             'players_count' => fake()->numberBetween(2, 4),
