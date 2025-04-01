@@ -23,13 +23,10 @@
 <script setup>
 
 import PrimaryButton from "@/Components/PrimaryButton.vue"
-import {router, usePage} from "@inertiajs/vue3"
+import {router} from "@inertiajs/vue3"
 import DynamicIcon from "@/Components/DynamicIcon.vue";
 
 const props = defineProps(['rooms']);
-const page = usePage();
-
-console.log('rooms: ', props.rooms);
 
 const goToRoom = (id) => {
     router.get(`/rooms/${id}`);

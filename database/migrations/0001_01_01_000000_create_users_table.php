@@ -20,7 +20,7 @@ return new class extends Migration {
 
             $table->date('premium_expires_at')->nullable();
             $table->string('avatar')->nullable();
-            
+
             $table->timestamps();
         });
 
