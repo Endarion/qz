@@ -22,9 +22,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory(10)->create();
+        User::create(['name' => 'Endarion', 'password' => 12345678, 'email' => 'desandel@yandex.ru']);
 
         $this->call([
             CategoriesTableSeeder::class,

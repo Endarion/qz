@@ -12,8 +12,7 @@ return new class extends Migration {
     {
         Schema::create('rooms', static function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('code', 5)->unique();
+            $table->string('name', 50);
             $table->foreignId('host_id')->constrained('users')->cascadeOnDelete();
 
             $table->unsignedTinyInteger('questions_count')->default(10)

@@ -21,7 +21,6 @@ class RoomFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'code' => fake()->unique()->randomNumber(5),
             'host_id' => User::factory(),
             'category_id' => function () {
                 return Category::inRandomOrder()->first()->id;

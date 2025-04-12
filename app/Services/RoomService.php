@@ -22,9 +22,11 @@ readonly class RoomService
             'name' => $data['name'],
             'host_id' => $host->id,
             'is_public' => $data['is_public'] ?? true,
-            'password' => $data['password'] ?? null,
+            'password' => $data['is_public'] ? null : $data['password'],
             'players_count' => $data['players_count'],
+            // todo статусы вынести в enum?
             'status' => 'waiting',
+            'questions_count' => $data['questions_count'],
             'category_id' => $data['category_id'],
             'answer_time' => $data['answer_time'],
         ]);
