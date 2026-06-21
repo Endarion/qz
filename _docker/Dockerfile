@@ -1,4 +1,4 @@
-FROM php:8.4-fpm AS builder
+FROM php:8.5-fpm AS builder
 
 RUN apt-get update && apt-get install -y \
     build-essential \

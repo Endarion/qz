@@ -3,7 +3,6 @@ services:
         build:
             context: .
             dockerfile: _docker/Dockerfile
-        image: laravel-app
         container_name: qz-app
         restart: unless-stopped
         tty: true
@@ -71,7 +70,9 @@ services:
         networks:
             - app-network
     reverb:
-        image: laravel-app
+        build:
+            context: .
+            dockerfile: _docker/Dockerfile
         container_name: qz-reverb
         restart: unless-stopped
         working_dir: /var/www
